@@ -21,7 +21,7 @@
 |Jasper    |             |Lelieveld  |5         |
 |Kelvin    |             |Dormans    |5         |
 |Alain     |             |Lardinois  |6         |
-|Bas       |van          |Dooren     |----------|
+|~~Bas~~   |~~van~~      |~~Dooren ~~|~~~6~~    |
 |Leroy     |             |Bemelen    |6         |
 |Robin     |             |Baltus     |6         |
 |Siem      |             |Neyzen     |6         |
