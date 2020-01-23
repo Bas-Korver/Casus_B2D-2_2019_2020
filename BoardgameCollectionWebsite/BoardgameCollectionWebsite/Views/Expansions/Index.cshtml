@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BoardgameCollectionWebsite.Models.Expansion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpansionID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpansionName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpansionID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpansionName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LocalExpansionID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LocalExpansionID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LocalExpansionID })
+        </td>
+    </tr>
+}
+
+</table>

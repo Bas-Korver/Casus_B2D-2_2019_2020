@@ -1,0 +1,114 @@
+﻿@model BoardgameCollectionWebsite.Models.BoardGame
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BoardGame</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BoardgameID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoardgameID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Thumbnail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thumbnail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PublicationYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PublicationYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinPlayers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinPlayers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxPlayers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxPlayers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlayingTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlayingTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxPlayTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxPlayTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinPlayTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinPlayTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinAge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinAge)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LocalBoardgameID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

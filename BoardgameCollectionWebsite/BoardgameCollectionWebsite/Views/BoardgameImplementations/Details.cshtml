@@ -1,0 +1,34 @@
+﻿@model BoardgameCollectionWebsite.Models.BoardgameImplementation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BoardgameImplementation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BoardGame.Thumbnail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoardGame.Thumbnail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Implementation.ImplementedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Implementation.ImplementedBy)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BoardgameImplementationID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

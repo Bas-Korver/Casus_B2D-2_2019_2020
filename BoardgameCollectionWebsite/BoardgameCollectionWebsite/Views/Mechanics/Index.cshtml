@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BoardgameCollectionWebsite.Models.Mechanic>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MechanicID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MechanicName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MechanicID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MechanicName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LocalMechanicID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LocalMechanicID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LocalMechanicID })
+        </td>
+    </tr>
+}
+
+</table>
