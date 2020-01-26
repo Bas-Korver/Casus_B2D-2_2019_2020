@@ -71,6 +71,13 @@ namespace BoardgameCollectionWebsite.BusinessLogic
             }
             return games;
         }
+
+        public static void addBoardGame(BoardGame game)
+        {
+            db.BoardGames.Add(game);
+            db.SaveChanges();
+        }
+
         public static List<Artist> getAllArtists()
         {
             var resultDB = db.Artists.ToList();
