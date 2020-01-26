@@ -12,6 +12,62 @@ namespace BoardgameCollectionWebsite.BusinessLogic
     {
         static BoardgameDatabaseContext db = new BoardgameDatabaseContext();
 
+        public static void addBoardGame(BoardGame game)
+        {
+            db.BoardGames.Add(game);
+            db.SaveChanges();
+        }
+        public static void addArtist(Artist artist)
+        {
+            db.Artists.Add(artist);
+            db.SaveChanges();
+        }
+        public static void addCategory(Category category)
+        {
+            db.Categories.Add(category);
+            db.SaveChanges();
+        }
+        public static void addDesigner(Designer designer)
+        {
+            db.Designers.Add(designer);
+            db.SaveChanges();
+        }
+
+        public static void addExpansion(Expansion expansion)
+        {
+            db.Expansions.Add(expansion);
+            db.SaveChanges();
+        }
+
+        public static void addFamily(Family family)
+        {
+            db.Families.Add(family);
+            db.SaveChanges();
+        }
+        public static void addImplementation(Implementation implementation)
+        {
+            db.Implementations.Add(implementation);
+            db.SaveChanges();
+        }
+
+        public static void addIntegration(Integration integration)
+        {
+            db.Integrations.Add(integration);
+            db.SaveChanges();
+        }
+
+        public static void addMechanic(Mechanic mechanic)
+        {
+            db.Mechanics.Add(mechanic);
+            db.SaveChanges();
+        }
+
+        public static void addPublisher(Publisher publisher)
+        {
+            db.Publishers.Add(publisher);
+            db.SaveChanges();
+        }
+
         public static BoardGame GetBoardByID(int id)
         {
             BoardGame foundBoard;
@@ -72,11 +128,9 @@ namespace BoardgameCollectionWebsite.BusinessLogic
             return games;
         }
 
-        public static void addBoardGame(BoardGame game)
-        {
-            db.BoardGames.Add(game);
-            db.SaveChanges();
-        }
+
+
+
 
         public static List<Artist> getAllArtists()
         {
