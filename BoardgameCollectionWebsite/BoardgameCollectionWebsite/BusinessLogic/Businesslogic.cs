@@ -50,12 +50,6 @@ namespace BoardgameCollectionWebsite.BusinessLogic
             db.SaveChanges();
         }
 
-        public static void addIntegration(Integration integration)
-        {
-            db.Integrations.Add(integration);
-            db.SaveChanges();
-        }
-
         public static void addMechanic(Mechanic mechanic)
         {
             db.Mechanics.Add(mechanic);
@@ -282,36 +276,6 @@ namespace BoardgameCollectionWebsite.BusinessLogic
             return games;
         }
 
-        public static List<Integration> getAllIntegrations()
-        {
-            var resultDB = db.Integrations.ToList();
-            List<Integration> games = resultDB;
-
-            // TODO: Check if exist. Else REMOVE
-            /*            List<BGGBoard> boards = BGGConnector.Connector.GetBoardsByName(" ", "boardgameartist");
-
-                        foreach (BGGBoard board in boards)
-                        {
-                            bool boardInDB = false;
-                            int round = 0;
-                            while (!boardInDB)
-                            {
-                                if (games[round].IntegrationID == Int32.Parse(board.Id))
-                                {
-                                    boardInDB = true;
-                                }
-                            }
-                            if (!boardInDB)
-                            {
-                                Integration boardGame = new Integration();
-                                boardGame.IntegrationID = Int32.Parse(board.Id);
-                                boardGame.IntegratedBy = board.Yearpublished.Value;
-                                games.Add(boardGame);
-                            }
-
-                        }*/
-            return games;
-        }
 
         public static List<Mechanic> getAllMechanics()
         {
