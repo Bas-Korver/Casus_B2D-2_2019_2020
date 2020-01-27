@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BGGConnector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BGGConnector_Nick_Rau.1.0.0\lib\netstandard2.0\BGGConnector.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -178,6 +181,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BusinessLogic\Businesslogic.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
     <Compile Include="Controllers\AspNetRolesController.cs" />
