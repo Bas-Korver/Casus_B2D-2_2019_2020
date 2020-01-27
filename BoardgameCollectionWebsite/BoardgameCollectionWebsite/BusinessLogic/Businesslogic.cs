@@ -502,17 +502,5 @@ namespace BoardgameCollectionWebsite.BusinessLogic
             AspNetUser user = result.FirstOrDefault();
             user.UserBoardgames.Remove(board);
         }
-        public static void ChangeUser(string userID)
-        {
-            // ??? HOE ZIT DAT MET ASP.NET USERS ???
-        }
-        public static void Login(string filledin_username, string filledin_password)
-        {
-            // ??? HOE ZIT DAT MET ASP.NET USERS ???
-        }
-        public static void Register(AspNetUser users)
-        {
-            // ??? HOE ZIT DAT MET ASP.NET USERS ???
-        }
     }
 }
