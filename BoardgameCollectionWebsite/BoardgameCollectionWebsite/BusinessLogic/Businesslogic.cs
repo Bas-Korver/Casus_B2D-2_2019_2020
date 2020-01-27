@@ -451,11 +451,18 @@ namespace BoardgameCollectionWebsite.BusinessLogic
         {
             var result = from netUser in db.AspNetUsers where netUser.Id == userID select netUser;
             AspNetUser user = result.FirstOrDefault();
-            // TODO: ??? Wat is dit met dotnetuser en boardgame en userboardgamefavorite???
+            UserBoardgameFavourite newFavorite = new UserBoardgameFavourite();
+            newFavorite.BoardGame = board;
+            newFavorite.AspNetUser = user;
+            db.UserBoardgameFavourites.Add(newFavorite);
+            db.SaveChanges();
         }
-        public static void RemoveBoardFromFavorites(BoardGame board, string userID)
+        public static void RemoveBoardFromFavorites(int boardID, string userID)
         {
-            // Zie AddBoardToFavorites
+            var result = from netUser in db.UserBoardgameFavourites where netUser.ASPUsersID == userID && netUser.LocalBoardgameID == boardID select netUser;
+            UserBoardgameFavourite newFavorite = result.FirstOrDefault();
+            db.UserBoardgameFavourites.Remove(newFavorite);
+            db.SaveChanges();
         }
         public static void AddNote(UserBoardgameComment comment, string userID)
         {
