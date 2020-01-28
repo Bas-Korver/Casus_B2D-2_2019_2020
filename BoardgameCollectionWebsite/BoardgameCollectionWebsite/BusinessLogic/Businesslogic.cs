@@ -64,8 +64,8 @@ namespace BoardgameCollectionWebsite.BusinessLogic
 
         public static BoardGame GetBoardByID(int id)
         {
-            BoardGame foundBoard;
-            
+            BoardGame foundBoard = new BoardGame();
+
             var result = from res in db.BoardGames where res.BoardgameID == id select res;
             foundBoard = result.FirstOrDefault();
             if (foundBoard == null)
@@ -73,6 +73,7 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                 BGGBoard bggBoard = BGGConnector.Connector.GetBoardById(id.ToString());
                 if (bggBoard != null)
                 {
+                    foundBoard = new BoardGame();
                     foundBoard.BoardgameID = Int32.Parse(bggBoard.Id);
                     foundBoard.Title = bggBoard.Name[0].Value;
                     foundBoard.Thumbnail = bggBoard.Thumbnail;
@@ -87,7 +88,7 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                     db.SaveChanges();
                     foundBoard = (from bor in db.BoardGames where bor.BoardgameID == foundBoard.BoardgameID select bor).FirstOrDefault();
 
-                    List < Category > categories = new List<Category>();
+                    List<Category> categories = new List<Category>();
                     List<Designer> designers = new List<Designer>();
                     List<Artist> artists = new List<Artist>();
                     List<Publisher> publishers = new List<Publisher>();
@@ -131,24 +132,31 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                             implementations.Add(new Implementation() { ImplementationID = Int32.Parse(link.Id), ImplementedBy = link.Value });
                         }
                     }
-                    
+
                     if (categories.Count != 0)
                     {
-                        foreach(Category cat in categories)
+                        foreach (Category cat in categories)
                         {
                             Category foundCategory = db.Categories.Find(cat.CategoryID);
-                            if(foundCategory == null)
+                            if (foundCategory == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(cat.CategoryName, "boardgamecategory");
-                                foundCategory = new Category() { CategoryID = Int32.Parse(res[0].Id), CategoryName = res[0].Name.ToString() };
-                                db.Categories.Add(foundCategory);
+                                if (res.Count > 0)
+                                {
+                                    foundCategory = new Category() { CategoryID = Int32.Parse(res[0].Id), CategoryName = res[0].Name[0].Value };
+                                    db.Categories.Add(foundCategory);
+                                    db.SaveChanges();
+                                    foundCategory = (from findCat in db.Categories where findCat.CategoryID == cat.CategoryID select findCat).FirstOrDefault();
+                                }
+
+                            }
+                            if (foundCategory != null)
+                            {
+                                BoardgameCategory boardgameCategory = new BoardgameCategory() { Category = foundCategory, BoardGame = foundBoard };
+                                db.BoardgameCategories.Add(boardgameCategory);
                                 db.SaveChanges();
-                                foundCategory = (from findCat in db.Categories where findCat.CategoryID == cat.CategoryID select findCat).FirstOrDefault();
                             }
 
-                            BoardgameCategory boardgameCategory = new BoardgameCategory() { Category = foundCategory, BoardGame = foundBoard };
-                            db.BoardgameCategories.Add(boardgameCategory);
-                            db.SaveChanges();
                         }
                     }
                     if (designers.Count != 0)
@@ -159,19 +167,26 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                             if (foundDesigner == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(des.DesignerName, "boardgamedesigner");
-                                foundDesigner = new Designer() { DesignerID = Int32.Parse(res[0].Id), DesignerName = res[0].Name.ToString() };
-                                db.Designers.Add(foundDesigner);
+                                if (res.Count > 0)
+                                {
+                                    foundDesigner = new Designer() { DesignerID = Int32.Parse(res[0].Id), DesignerName = res[0].Name[0].Value };
+                                    db.Designers.Add(foundDesigner);
+                                    db.SaveChanges();
+                                    foundDesigner = (from findCat in db.Designers where findCat.DesignerID == des.DesignerID select findCat).FirstOrDefault();
+                                }
+
+                            }
+                            if (foundDesigner != null)
+                            {
+                                BoardgameDesigner boardgameDesigner = new BoardgameDesigner() { Designer = foundDesigner, BoardGame = foundBoard };
+                                db.BoardgameDesigners.Add(boardgameDesigner);
                                 db.SaveChanges();
-                                foundDesigner = (from findCat in db.Designers where findCat.DesignerID == des.DesignerID select findCat).FirstOrDefault();
                             }
 
-                            BoardgameDesigner boardgameDesigner = new BoardgameDesigner() { Designer = foundDesigner, BoardGame = foundBoard };
-                            db.BoardgameDesigners.Add(boardgameDesigner);
-                            db.SaveChanges();
                         }
                     }
 
-                   
+
                     if (artists.Count != 0)
                     {
                         foreach (Artist art in artists)
@@ -180,15 +195,22 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                             if (foundArtist == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(art.ArtistName, "boardgameartist");
-                                foundArtist = new Artist() { ArtistID = Int32.Parse(res[0].Id), ArtistName = res[0].Name.ToString() };
-                                db.Artists.Add(foundArtist);
+                                if (res.Count > 0)
+                                {
+                                    foundArtist = new Artist() { ArtistID = Int32.Parse(res[0].Id), ArtistName = res[0].Name[0].Value };
+                                    db.Artists.Add(foundArtist);
+                                    db.SaveChanges();
+                                    foundArtist = (from findCat in db.Artists where findCat.ArtistID == art.ArtistID select findCat).FirstOrDefault();
+                                }
+
+                            }
+                            if (foundBoard != null)
+                            {
+                                BoardgameArtist boardgameArtist = new BoardgameArtist() { Artist = foundArtist, BoardGame = foundBoard };
+                                db.BoardgameArtists.Add(boardgameArtist);
                                 db.SaveChanges();
-                                foundArtist = (from findCat in db.Artists where findCat.ArtistID == art.ArtistID select findCat).FirstOrDefault();
                             }
 
-                            BoardgameArtist boardgameArtist = new BoardgameArtist() { Artist = foundArtist, BoardGame = foundBoard };
-                            db.BoardgameArtists.Add(boardgameArtist);
-                            db.SaveChanges();
                         }
                     }
                     if (publishers.Count != 0)
@@ -198,16 +220,23 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                             Publisher foundPublisher = db.Publishers.Find(pub.PublisherID);
                             if (foundPublisher == null)
                             {
-                                List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(pub.PublisherName, "boardgameartist");
-                                foundPublisher = new Publisher() { PublisherID = Int32.Parse(res[0].Id), PublisherName = res[0].Name.ToString() };
-                                db.Publishers.Add(foundPublisher);
+                                List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(pub.PublisherName, "boardgamepublisher");
+                                if (res.Count > 0)
+                                {
+                                    foundPublisher = new Publisher() { PublisherID = Int32.Parse(res[0].Id), PublisherName = res[0].Name[0].Value };
+                                    db.Publishers.Add(foundPublisher);
+                                    db.SaveChanges();
+                                    foundPublisher = (from findCat in db.Publishers where findCat.PublisherID == pub.PublisherID select findCat).FirstOrDefault();
+                                }
+
+                            }
+                            if (foundPublisher != null)
+                            {
+                                BoardgamePublisher boardgamePublisher = new BoardgamePublisher() { Publisher = foundPublisher, BoardGame = foundBoard };
+                                db.BoardgamePublishers.Add(boardgamePublisher);
                                 db.SaveChanges();
-                                foundPublisher = (from findCat in db.Publishers where findCat.PublisherID == pub.PublisherID select findCat).FirstOrDefault();
                             }
 
-                            BoardgamePublisher boardgamePublisher = new BoardgamePublisher() { Publisher = foundPublisher, BoardGame = foundBoard };
-                            db.BoardgamePublishers.Add(boardgamePublisher);
-                            db.SaveChanges();
                         }
                     }
                     // TODO: Voor de rest nog doen
@@ -219,15 +248,22 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                             if (foundFamily == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(fam.FamilyName, "boardgamefamily");
-                                foundFamily = new Family() { FamilyID = Int32.Parse(res[0].Id), FamilyName = res[0].Name.ToString() };
-                                db.Families.Add(foundFamily);
+                                if (res.Count > 0)
+                                {
+                                    foundFamily = new Family() { FamilyID = Int32.Parse(res[0].Id), FamilyName = res[0].Name[0].Value };
+                                    db.Families.Add(foundFamily);
+                                    db.SaveChanges();
+                                    foundFamily = (from findCat in db.Families where findCat.FamilyID == fam.FamilyID select findCat).FirstOrDefault();
+                                }
+
+                            }
+                            if (foundFamily != null)
+                            {
+                                BoardgameFamily boardgameFamily = new BoardgameFamily() { Family = foundFamily, BoardGame = foundBoard };
+                                db.BoardgameFamilies.Add(boardgameFamily);
                                 db.SaveChanges();
-                                foundFamily = (from findCat in db.Families where findCat.FamilyID == fam.FamilyID select findCat).FirstOrDefault();
                             }
 
-                            BoardgameFamily boardgameFamily = new BoardgameFamily() { Family = foundFamily, BoardGame = foundBoard };
-                            db.BoardgameFamilies.Add(boardgameFamily);
-                            db.SaveChanges();
                         }
                     }
                     if (expansions.Count != 0)
@@ -238,15 +274,22 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                             if (foundExpansion == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(exp.ExpansionName, "boardgameexpansion");
-                                foundExpansion = new Expansion() { ExpansionID = Int32.Parse(res[0].Id), ExpansionName = res[0].Name.ToString() };
-                                db.Expansions.Add(foundExpansion);
+                                if (res.Count > 0)
+                                {
+                                    foundExpansion = new Expansion() { ExpansionID = Int32.Parse(res[0].Id), ExpansionName = res[0].Name[0].Value };
+                                    db.Expansions.Add(foundExpansion);
+                                    db.SaveChanges();
+                                    foundExpansion = (from findCat in db.Expansions where findCat.ExpansionID == exp.ExpansionID select findCat).FirstOrDefault();
+                                }
+
+                            }
+                            if (foundExpansion != null)
+                            {
+                                BoardgameExpansion boardgameExpansion = new BoardgameExpansion() { Expansion = foundExpansion, BoardGame = foundBoard };
+                                db.BoardgameExpansions.Add(boardgameExpansion);
                                 db.SaveChanges();
-                                foundExpansion = (from findCat in db.Expansions where findCat.ExpansionID == exp.ExpansionID select findCat).FirstOrDefault();
                             }
 
-                            BoardgameExpansion boardgameExpansion = new BoardgameExpansion() { Expansion = foundExpansion, BoardGame = foundBoard };
-                            db.BoardgameExpansions.Add(boardgameExpansion);
-                            db.SaveChanges();
                         }
                     }
                     if (mechanics.Count != 0)
@@ -256,16 +299,23 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                             Mechanic foundExpansion = db.Mechanics.Find(mech.MechanicID);
                             if (foundExpansion == null)
                             {
-                                List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(mech.MechanicName, "boardgameexpansion");
-                                foundExpansion = new Mechanic() { MechanicID = Int32.Parse(res[0].Id), MechanicName = res[0].Name.ToString() };
-                                db.Mechanics.Add(foundExpansion);
+                                List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(mech.MechanicName, "boardgamemechanic");
+                                if (res.Count > 0)
+                                {
+                                    foundExpansion = new Mechanic() { MechanicID = Int32.Parse(res[0].Id), MechanicName = res[0].Name[0].Value };
+                                    db.Mechanics.Add(foundExpansion);
+                                    db.SaveChanges();
+                                    foundExpansion = (from findCat in db.Mechanics where findCat.MechanicID == mech.MechanicID select findCat).FirstOrDefault();
+                                }
+
+                            }
+                            if (foundExpansion != null)
+                            {
+                                BoardgameMechanic boardgameMechanic = new BoardgameMechanic() { Mechanic = foundExpansion, BoardGame = foundBoard };
+                                db.BoardgameMechanics.Add(boardgameMechanic);
                                 db.SaveChanges();
-                                foundExpansion = (from findCat in db.Mechanics where findCat.MechanicID == mech.MechanicID select findCat).FirstOrDefault();
                             }
 
-                            BoardgameMechanic boardgameMechanic = new BoardgameMechanic() { Mechanic = foundExpansion, BoardGame = foundBoard };
-                            db.BoardgameMechanics.Add(boardgameMechanic);
-                            db.SaveChanges();
                         }
                     }
                     if (implementations.Count != 0)
@@ -275,27 +325,38 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                             Implementation foundImplementation = db.Implementations.Find(imp.ImplementationID);
                             if (foundImplementation == null)
                             {
-                                List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(imp.ImplementedBy, "boardgameexpansion");
-                                foundImplementation = new Implementation() { ImplementationID = Int32.Parse(res[0].Id), ImplementedBy = res[0].Name.ToString() };
-                                db.Implementations.Add(foundImplementation);
+                                List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(imp.ImplementedBy, "boardgameimplementation");
+                                if (res.Count > 0)
+                                {
+                                    foundImplementation = new Implementation() { ImplementationID = Int32.Parse(res[0].Id), ImplementedBy = res[0].Name[0].Value };
+                                    db.Implementations.Add(foundImplementation);
+                                    db.SaveChanges();
+                                    foundImplementation = (from findCat in db.Implementations where findCat.ImplementationID == imp.ImplementationID select findCat).FirstOrDefault();
+                                }
+
+                            }
+                            if (foundImplementation != null)
+                            {
+                                BoardgameImplementation boardgameImplementation = new BoardgameImplementation() { Implementation = foundImplementation, BoardGame = foundBoard };
+                                db.BoardgameImplementations.Add(boardgameImplementation);
                                 db.SaveChanges();
-                                foundImplementation = (from findCat in db.Implementations where findCat.ImplementationID == imp.ImplementationID select findCat).FirstOrDefault();
                             }
 
-                            BoardgameImplementation boardgameImplementation = new BoardgameImplementation() { Implementation = foundImplementation, BoardGame = foundBoard };
-                            db.BoardgameImplementations.Add(boardgameImplementation);
-                            db.SaveChanges();
                         }
                     }
 
-                    
+
                     return foundBoard;
                 }
+            }
+            if (foundBoard != null)
+            {
+                return foundBoard;
             }
             return null;
         }
 
-        public static List<BoardGame> getAllBoardgames()
+        public static List<BoardGame> getAllBoardGame()
         {
             var resultDB = db.BoardGames.ToList();
             List<BoardGame> games = resultDB;
