@@ -77,6 +77,9 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                     foundBoard.BoardgameID = Int32.Parse(bggBoard.Id);
                     foundBoard.Title = bggBoard.Name[0].Value;
                     foundBoard.Thumbnail = bggBoard.Thumbnail;
+                    foundBoard.Image = bggBoard.Image;
+                    foundBoard.Description = bggBoard.Description;
+                    foundBoard.MinAge = Int32.Parse(bggBoard.Minage.Value);
                     foundBoard.PublicationYear = Int32.Parse(bggBoard.Yearpublished.Value);
                     foundBoard.PlayingTime = Int32.Parse(bggBoard.Playingtime.Value);
                     foundBoard.MinPlayTime = Int32.Parse(bggBoard.Minplaytime.Value);
@@ -137,7 +140,7 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                     {
                         foreach (Category cat in categories)
                         {
-                            Category foundCategory = db.Categories.Find(cat.CategoryID);
+                            Category foundCategory = (from find in db.Categories where find.CategoryID == cat.CategoryID select find).FirstOrDefault();
                             if (foundCategory == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(cat.CategoryName, "boardgamecategory");
@@ -163,7 +166,7 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                     {
                         foreach (Designer des in designers)
                         {
-                            Designer foundDesigner = db.Designers.Find(des.DesignerID);
+                            Designer foundDesigner = (from find in db.Designers where find.DesignerID == des.DesignerID select find).FirstOrDefault();
                             if (foundDesigner == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(des.DesignerName, "boardgamedesigner");
@@ -191,7 +194,7 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                     {
                         foreach (Artist art in artists)
                         {
-                            Artist foundArtist = db.Artists.Find(art.ArtistID);
+                            Artist foundArtist = (from find in db.Artists where find.ArtistID == art.ArtistID select find).FirstOrDefault();
                             if (foundArtist == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(art.ArtistName, "boardgameartist");
@@ -217,7 +220,7 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                     {
                         foreach (Publisher pub in publishers)
                         {
-                            Publisher foundPublisher = db.Publishers.Find(pub.PublisherID);
+                            Publisher foundPublisher = (from find in db.Publishers where find.PublisherID == pub.PublisherID select find).FirstOrDefault();
                             if (foundPublisher == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(pub.PublisherName, "boardgamepublisher");
@@ -244,7 +247,7 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                     {
                         foreach (Family fam in families)
                         {
-                            Family foundFamily = db.Families.Find(fam.FamilyID);
+                            Family foundFamily = (from find in db.Families where find.FamilyID == fam.FamilyID select find).FirstOrDefault();
                             if (foundFamily == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(fam.FamilyName, "boardgamefamily");
@@ -270,7 +273,7 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                     {
                         foreach (Expansion exp in expansions)
                         {
-                            Expansion foundExpansion = db.Expansions.Find(exp.ExpansionID);
+                            Expansion foundExpansion = (from find in db.Expansions where find.ExpansionID == exp.ExpansionID select find).FirstOrDefault();
                             if (foundExpansion == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(exp.ExpansionName, "boardgameexpansion");
@@ -296,7 +299,7 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                     {
                         foreach (Mechanic mech in mechanics)
                         {
-                            Mechanic foundExpansion = db.Mechanics.Find(mech.MechanicID);
+                            Mechanic foundExpansion = (from find in db.Mechanics where find.MechanicID == mech.MechanicID select find).FirstOrDefault();
                             if (foundExpansion == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(mech.MechanicName, "boardgamemechanic");
@@ -322,7 +325,7 @@ namespace BoardgameCollectionWebsite.BusinessLogic
                     {
                         foreach (Implementation imp in implementations)
                         {
-                            Implementation foundImplementation = db.Implementations.Find(imp.ImplementationID);
+                            Implementation foundImplementation = (from find in db.Implementations where find.ImplementationID == imp.ImplementationID select find).FirstOrDefault();
                             if (foundImplementation == null)
                             {
                                 List<BGGBoard> res = BGGConnector.Connector.GetBoardsByName(imp.ImplementedBy, "boardgameimplementation");
