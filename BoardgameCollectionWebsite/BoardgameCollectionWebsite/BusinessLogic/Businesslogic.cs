@@ -242,7 +242,6 @@ namespace BoardgameCollectionWebsite.BusinessLogic
 
                         }
                     }
-                    // TODO: Voor de rest nog doen
                     if (families.Count != 0)
                     {
                         foreach (Family fam in families)
@@ -347,9 +346,6 @@ namespace BoardgameCollectionWebsite.BusinessLogic
 
                         }
                     }
-
-
-                    return foundBoard;
                 }
             }
             if (foundBoard != null)
