@@ -4,96 +4,278 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<style>
+    #comparisonContainer {
+        position: fixed;
+        bottom: 0;
+        right: 200px;
+        height: 50px;
+        width: 250px;
+        border-left: 2px solid #037BBC;
+        border-right: 2px solid #037BBC;
+        border-radius: 5px 5px 0 0;
+        background: #fff;
+        -webkit-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+        overflow: hidden;
+        display: none;
+        z-index: 100;
+    }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BoardgameID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Thumbnail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PublicationYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MinPlayers)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaxPlayers)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PlayingTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaxPlayTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MinPlayTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MinAge)
-        </th>
-        <th></th>
-    </tr>
+        #comparisonContainer.open {
+            height: 250px;
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BoardgameID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Thumbnail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublicationYear)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MinPlayers)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaxPlayers)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PlayingTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaxPlayTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MinPlayTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MinAge)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LocalBoardgameID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LocalBoardgameID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LocalBoardgameID })
-        </td>
-    </tr>
-}
+        #comparisonContainer #comparisonTitle {
+            height: 50px;
+            width: 250px;
+            padding: 0 10px;
+            box-sizing: border-box;
+            color: #fff;
+            background: #037BBC;
+            display: -webkit-box;
+            display: flex;
+            -webkit-box-pack: justify;
+            justify-content: space-between;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-transition: color 0.2s ease;
+            transition: color 0.2s ease;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-</table>
+            #comparisonContainer #comparisonTitle #comparisonArrow.open {
+                transform: rotate(180deg);
+            }
+
+            #comparisonContainer #comparisonTitle:hover {
+                color: #eee;
+            }
+
+        #comparisonContainer #comparisonList {
+            padding: 0 5px;
+            box-sizing: border-box;
+        }
+
+    .itemTitle {
+        margin-top: 0 !important;
+    }
+
+    .itemDescription {
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        margin-bottom: 10px;
+    }
+
+    label {
+        user-select: none;
+        margin-left: 10px;
+    }
+</style>
+
+<div id="comparisonContainer" class="open">
+    <div id="comparisonTitle" onclick="OnComparisonToggle()"><span>Vergelijk</span><i id="comparisonArrow" class="material-icons">keyboard_arrow_up</i></div>
+    <div id="comparisonList">
+
+        <a id="comparisonButton" onclick="OnCompare()" class="btn btn-group btn-primary">Vergelijk</a>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+
+        @using (Html.BeginForm("Index", "BoardGames", FormMethod.Post))
+        {
+            <h4>Spelsoort</h4>
+            foreach (var item in Model)
+            {
+                if (@item.BoardgameCategories.Count != 0)
+                {
+                    <div class="input-group">
+                        <input type="checkbox" name="@item.Title" id="@item.Title" />
+                        <label for="@item.Title">@(item.BoardgameCategories.First().Category.CategoryName)</label>
+                    </div>
+                }
+            }
+
+            <h4>Aantal spelers</h4>
+            <div class="input-group">
+                <input type="checkbox" name="onePlayerCheckbox" id="onePlayerCheckbox">
+                <label for="onePlayerCheckbox">1 Speler</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" name="twoPlayerCheckbox" id="twoPlayerCheckbox">
+                <label for="twoPlayerCheckbox">2 Spelers</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" name="threeFourPlayerCheckbox" id="threeFourPlayerCheckbox">
+                <label for="threeFourPlayerCheckbox">3 tot 4 Spelers</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" name="fivePlusPlayerCheckbox" id="fivePlusPlayerCheckbox">
+                <label for="fivePlusPlayerCheckbox">4+ Spelers</label>
+            </div>
+
+            <h4>Leeftijd</h4>
+            <div class="input-group">
+                <input type="checkbox" name="zeroToTwelveCheckbox" id="zeroToTwelveCheckbox">
+                <label for="zeroToTwelveCheckbox">1-12 Jaar</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" name="thirteenToEighteenCheckbox" id="thirteenToEighteenCheckbox">
+                <label for="thirteenToEighteenCheckbox">13+</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" name="eighteenPlusCheckbox" id="eighteenPlusCheckbox">
+                <label for="eighteenPlusCheckbox">18+</label>
+            </div>
+
+            <h4>Speeltijd</h4>
+            <div class="input-group">
+                <input type="checkbox" name="zeroToFifteenCheckbox" id="zeroToFifteenCheckbox">
+                <label for="zeroToFifteenCheckbox">0 tot 15 Minuten</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" name="fifteenToThirtyCheckbox" id="fifteenToThirtyCheckbox">
+                <label for="fifteenToThirtyCheckbox">15 tot 30 Minuten</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" name="thirtyToSixtyCheckbox" id="thirtyToSixtyCheckbox">
+                <label for="thirtyToSixtyCheckbox">30 tot 60 Minuten</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" name="sixtyPlusCheckbox" id="sixtyPlusCheckbox">
+                <label for="sixtyPlusCheckbox">Langer dan een uur</label>
+            </div>
+
+            <h4>Spelnaam</h4>
+            <input type="text" name="gameTitle" id="gameTitle" />
+            <br /><br />
+            <h4>Beschrijving</h4>
+            <input type="text" name="gameDescription" id="gameDescription" />
+            <br /><br />
+
+            <input type="submit" value="Search" />
+        }
+
+    </div>
+    <div class="col-md-9">
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="col-md-3">
+                    <a href=@Url.Action("Details", "BoardGames", new { id = item.BoardgameID })>
+                        <img src=@item.Thumbnail class="img-responsive" style="width: 150px;" />
+                    </a>
+                </div>
+                <div class="col-md-9">
+                    <h2 class="itemTitle">@item.Title</h2>
+                    <h5><b>Minimale Leeftijd</b> @item.MinAge jaar | <b>Aantal spelers</b> @item.MinPlayers - @item.MaxPlayers | <b>Spelduur</b> @item.MaxPlayTime min</h5>
+                    <div class="itemDescription">@item.Description</div>
+
+                    @*<a href="~/Detail/Game" class="btn btn-primary">Meer details</a>*@
+                    @Html.ActionLink("Details", "Details", new { id = item.BoardgameID })
+                    <!-- When checkbox for comparison is clicked, the element is passed along with the game ID and title -->
+                    <label><input type="checkbox" onchange="OnCompareChange(this, '@item.BoardgameID', '@item.Title')" /> Vergelijk</label>
+                </div>
+            </div>
+            <hr />
+        }
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    // Array of objects (id, title) selected for comparison
+    const gamesToCompare = [];
+
+    // Link to comparison page with the selected game IDs
+    const OnCompare = () => {
+
+        let paramString = "";
+
+        // Get all IDs
+        for (let game of gamesToCompare) {
+            paramString += game.id + ";";
+        }
+
+        paramString = paramString.slice(0, -1); // Remove semicolon from end of string
+
+        window.location.href = `/BoardGames/Compare?gtc=${paramString}`;
+    }
+
+    // Toggles the comparison list element
+    const OnComparisonToggle = () => {
+
+        var container = document.getElementById("comparisonContainer");
+        var arrow = document.getElementById("comparisonArrow");
+
+        if (container.classList.contains("open")) {
+            container.classList.remove("open");
+            arrow.classList.remove("open");
+        } else {
+            container.classList.add("open");
+            arrow.classList.add("open");
+        }
+    }
+
+    // Adds or removes games for selection based on checkbox status
+    const OnCompareChange = (checkbox, id, title) => {
+
+        const game = {
+            id,
+            title
+        }
+
+        if (checkbox.checked) {
+            // Add game to comparison list
+            gamesToCompare.push(game);
+
+            const element = document.createElement("h3");
+            element.innerText = game.title;
+            element.title = game.title;
+
+            document.getElementById("comparisonList").prepend(element);
+
+        } else {
+            // Remove game from comparison list
+            const index = gamesToCompare.map(function (e) { return e.id; }).indexOf(game.id); // Get index of game in the array
+            if (index !== -1) gamesToCompare.splice(index, 1); // If game in array, remove it (if it's not in the array for some reason, the index returns -1)
+
+            // Remove game from comparison overview element
+            document.querySelector(`h3[title="${game.title}"]`).remove();
+
+        }
+
+        // Only show comparison list when there's items selected
+        const comparisonContainer = document.getElementById("comparisonContainer");
+        if (gamesToCompare.length > 0) {
+            comparisonContainer.style.display = "block";
+
+            const comparisonButton = document.getElementById("comparisonButton");
+            console.log(gamesToCompare.length);
+
+            // Only activate compare button if more than 1 game is selected
+            if (gamesToCompare.length > 1) {
+                comparisonButton.classList.remove("disabled");
+            } else {
+
+                if (!comparisonButton.classList.contains("disabled")) {
+                    comparisonButton.classList.add("disabled");
+                }
+
+            }
+
+        } else {
+            comparisonContainer.style.display = "none";
+        }
+    }
+</script>
