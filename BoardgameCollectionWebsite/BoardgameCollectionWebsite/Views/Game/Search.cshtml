@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+}
+
+    <div class="row">
+        <div class="col-md-3">
+            <br />
+            <br />
+            <form class="form">
+                <h5>Spelnaam</h5>
+                <input type="text" name="game_title" id="game_title" />
+                <br /><br />
+                <h5>Merknaam</h5>
+                <input type="text" name="game_brand" id="game_brand" />
+                <br /><br />
+                <button class="btn btn-success">Zoeken</button>
+            </form>
+        </div>
+        <h2>Resultaten</h2>
+        <div class="col-md-9">
+            <!-- Add code to dynamically show results-->
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="~/Content/Images/Monopoly.png" class="img-responsive" style="width: 150px;" />
+                </div>
+                <div class="col-md-9">
+                    <h2>Merk, Naam</h2>
+                    <h4>Details: Leeftijd | Aantal spelers | Taal | Uitgever</h4>
+                    <p>Beschrijving</p>
+                    <a href="~/Game/Compare" class="btn btn-group btn-primary">Vergelijk</a>
+                    <a href="~/Detail/Game" class="btn btn-primary">Meer details</a>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="~/Content/Images/Monopoly.png" class="img-responsive" style="width: 150px;" />
+                </div>
+                <div class="col-md-9">
+                    <h2>Merk, Naam</h2>
+                    <h4>Details: Leeftijd | Aantal spelers | Taal | Uitgever</h4>
+                    <p>Beschrijving</p>
+                    <a href="~/Game/Compare" class="btn btn-group btn-primary">Vergelijk</a>
+                    <a href="~/Detail/Game" class="btn btn-primary">Meer details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
