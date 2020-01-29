@@ -1,0 +1,18 @@
+namespace BoardgameCollectionWebsite.Models
+{
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    [Table("BoardgameArtist")]
+    public partial class BoardgameArtist
+    {
+        public int BoardgameArtistID { get; set; }
+
+        public int LocalBoardgameID { get; set; }
+
+        public int LocalArtistID { get; set; }
+
+        public virtual Artist Artist { get; set; }
+
+        public virtual BoardGame BoardGame { get; set; }
+    }
+}

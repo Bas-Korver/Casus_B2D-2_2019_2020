@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BoardgameCollectionWebsite.Models.BoardGame>
+
+@{
+    ViewBag.Title = "Compare";
+}
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<h2>Vergelijken</h2>
+
+<div class="row">
+    <div class="col-sm-8">
+        <!-- Add code to dynamically add cards -->
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-4">
+                    <div class="w3-card-4">
+                        <img src=@item.Thumbnail style="width:200px">
+                        <div class="w3-container w3-center">
+                            <h3 id="merk"></h3>
+                            <h4 id="spelnaam"><b>@item.Title</b></h4>
+                            <p></p>
+                            <p>Spelers: @item.MinPlayers - @item.MaxPlayers</p>
+                            <p>Min. Leeftijd: @item.MinAge</p>
+                            <p>Speeltijd: @item.MinPlayTime - @item.MaxPlayTime</p>
+                            <br>
+
+                            <p>Uitgave Jaar: @item.PublicationYear</p>
+                            <br>
+                            <a class="btn btn-primary" href=@Url.Action("Details", "BoardGames", new { id = item.BoardgameID })>Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>
+
