@@ -4,111 +4,92 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col">
+        <section id="detailForm">
+            <div class="col-md-12">
+                <h3>@Model.Title</h3>
+                <h4>
+                    @foreach (var publisher in Model.BoardgamePublishers)
+                    {
+                        <span>@publisher.Publisher.PublisherName </span>
+                    }
+                </h4>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <img class="spel-image" style="height: 300px; width: 370px;" src="@Model.Image" />
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h4>Beschrijving</h4>
+                <p>
+                    @Model.Description
+                </p>
+            </div>
+            <div class="col-md-12" style="margin-left: 20px;">
+                <br />
 
-<div>
-    <h4>BoardGame</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.BoardgameID)
-        </dt>
+                <div class="row">
+                    <label>Aantal spelers: @Model.MinPlayers - @Model.MaxPlayers </label>
+                </div>
+                <div class="row">
+                    <label>Leeftijd: @Model.MinAge</label>
+                </div>
+                <div class="row">
+                    <label>
+                        Speeltijd:
+                        @if (Model.MinPlayTime == Model.MaxPlayTime)
+                        {
+                            @Model.MinPlayTime;
+                        }
+                        else
+                        {
+                            @(Model.MinPlayTime + " - " + Model.MaxPlayTime);
+                        }
+                    </label>
+                </div>
+                <div class="row">
+                    <label>
+                        Categorieën:
+                        @foreach (var item in Model.BoardgameCategories)
+                        {
+                            if (item == Model.BoardgameCategories.Last())
+                            {
+                                @item.Category.CategoryName
+                            }
+                            else
+                            {
+                                @(item.Category.CategoryName + ", ");
+                            }
+                        }
 
-        <dd>
-            @Html.DisplayFor(model => model.BoardgameID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Thumbnail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Thumbnail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PublicationYear)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PublicationYear)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MinPlayers)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MinPlayers)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MaxPlayers)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MaxPlayers)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PlayingTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PlayingTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MaxPlayTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MaxPlayTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MinPlayTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MinPlayTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MinAge)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MinAge)
-        </dd>
-
-    </dl>
+                        @if (Model.BoardgameCategories.Count == 0)
+                        {
+                            @("Geen Categorieën");
+                        }
+                    </label>
+                </div>
+                <br />
+                <div class="row">
+                    <label>Uitgave jaar: @Model.PublicationYear</label>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
+
+<hr/>
+
+<div class="form-group">
+    <label for="exampleTextarea">Persoonlijke notitie</label>
+    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+    <br />
+    <a class="btn btn-primary" style="padding-top: 10px">Opslaan</a>
+</div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.LocalBoardgameID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Bewerk", "Edit", new { id = Model.LocalBoardgameID }) |
+    @Html.ActionLink("Terug naar overzicht", "Index")
 </p>

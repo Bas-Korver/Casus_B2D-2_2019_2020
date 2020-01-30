@@ -280,7 +280,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -329,11 +328,6 @@
     <Content Include="Views\AspNetUserLogins\Details.cshtml" />
     <Content Include="Views\AspNetUserLogins\Edit.cshtml" />
     <Content Include="Views\AspNetUserLogins\Index.cshtml" />
-    <Content Include="Views\BoardGames\Create.cshtml" />
-    <Content Include="Views\BoardGames\Delete.cshtml" />
-    <Content Include="Views\BoardGames\Details.cshtml" />
-    <Content Include="Views\BoardGames\Edit.cshtml" />
-    <Content Include="Views\BoardGames\Index.cshtml" />
     <Content Include="Views\BoardgameArtists\Create.cshtml" />
     <Content Include="Views\BoardgameArtists\Delete.cshtml" />
     <Content Include="Views\BoardgameArtists\Details.cshtml" />
@@ -434,6 +428,13 @@
     <Content Include="Views\UserBoardgameFavourites\Details.cshtml" />
     <Content Include="Views\UserBoardgameFavourites\Edit.cshtml" />
     <Content Include="Views\UserBoardgameFavourites\Index.cshtml" />
+    <Content Include="Views\BoardGames\Compare.cshtml" />
+    <Content Include="Views\BoardGames\Create.cshtml" />
+    <Content Include="Views\BoardGames\Delete.cshtml" />
+    <Content Include="Views\BoardGames\Details.cshtml" />
+    <Content Include="Views\BoardGames\Edit.cshtml" />
+    <Content Include="Views\BoardGames\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
