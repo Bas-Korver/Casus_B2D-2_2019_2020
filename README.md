@@ -5,10 +5,10 @@
  1. Ga naar de plek waar je het zip-bestand hebt opgeslagen en pak het uit.
  1. Open de uitgepakt map en open daarna de map "BoardgameCollectionWebsite".
  1. Open het bestand "BoardgameCollectionWebsite.sln" met Visual Studio.
- 1. Wanneer Visual Studio geopent is, klik op de tab "Project" en klik dan in de lijst op "Manage NuGet Packages..."
- 1. Er verschijnt nu een nieuw venster, bovenaan in de gelenbalk staat "Some NuGet packages are missing from this solution. Click to restore from your online package sources"
- 1. Klik aan de rechterkant in de gelenbalk op de knop "Restore"
- 1. Je kan nu het project draaien
+ 1. Wanneer Visual Studio geopent is, klik op de tab "Project" en klik dan in de lijst op "Manage NuGet Packages...".
+ 1. Er verschijnt nu een nieuw venster, bovenaan in de gelenbalk staat "Some NuGet packages are missing from this solution. Click to restore from your online package sources".
+ 1. Klik aan de rechterkant in de gelenbalk op de knop "Restore".
+ 1. Je kan nu het project draaien.
 
 
 ## Casusleden
