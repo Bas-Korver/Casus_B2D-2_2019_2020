@@ -77,13 +77,16 @@
     </div>
 </div>
 
-<div class="form-group" style="padding-top: 60px;">
-    <label for="exampleTextarea">Personal notes.</label>
+<hr/>
+
+<div class="form-group">
+    <label for="exampleTextarea">Persoonlijke notitie</label>
     <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-    <a class="btn btn-primary" style="padding-top: 10px">Save</a>
+    <br />
+    <a class="btn btn-primary" style="padding-top: 10px">Opslaan</a>
 </div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.LocalBoardgameID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Bewerk", "Edit", new { id = Model.LocalBoardgameID }) |
+    @Html.ActionLink("Terug naar overzicht", "Index")
 </p>

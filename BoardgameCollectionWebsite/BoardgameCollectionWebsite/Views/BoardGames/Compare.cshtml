@@ -6,35 +6,85 @@
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
+<style>
+    #compareContainer {
+        display: flex;
+        overflow-x: scroll;
+        position: absolute;
+        left: 0;
+        width: 100vw;
+        justify-content: center;
+    }
+
+    .gameCardContainer {
+        margin: 20px 0;
+        padding: 0 40px;
+        border-left: 1px solid #696969;
+        display: flex;
+        flex-direction: column;
+        max-width: 300px
+    }
+
+    .gameCardContainer:nth-child(1) {
+        border: none;
+    }
+
+    .gameCardThumbnail {
+        min-height: 150px
+    }
+
+    .gameCardContent {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    footer {
+        display: none
+    }
+
+</style>
+
 <h2>Vergelijken</h2>
 
-<div class="row">
-    <div class="col-sm-8">
-        <!-- Add code to dynamically add cards -->
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-sm-4">
-                    <div class="w3-card-4">
-                        <img src=@item.Thumbnail style="width:200px">
-                        <div class="w3-container w3-center">
-                            <h3 id="merk"></h3>
-                            <h4 id="spelnaam"><b>@item.Title</b></h4>
-                            <p></p>
-                            <p>Spelers: @item.MinPlayers - @item.MaxPlayers</p>
-                            <p>Min. Leeftijd: @item.MinAge</p>
-                            <p>Speeltijd: @item.MinPlayTime - @item.MaxPlayTime</p>
-                            <br>
 
-                            <p>Uitgave Jaar: @item.PublicationYear</p>
-                            <br>
-                            <a class="btn btn-primary" href=@Url.Action("Details", "BoardGames", new { id = item.BoardgameID })>Details</a>
-                        </div>
-                    </div>
+<!-- New layout -->
+
+<div id="compareContainer">
+
+    @foreach (var item in Model)
+    {
+        <div class="gameCardContainer">
+            <div class="gameCardThumbnail">
+                <img src=@item.Thumbnail>
+            </div>
+            <div class="gameCardContent">
+
+                <div class="gameCardContentSpecs">
+                    <h3 id="merk"></h3>
+                    <h4 id="spelnaam"><b>@item.Title</b></h4>
+                    <p></p>
+                    <p>Spelers: @item.MinPlayers - @item.MaxPlayers</p>
+                    <p>Min. Leeftijd: @item.MinAge</p>
+                    <p>Speeltijd: @item.MinPlayTime - @item.MaxPlayTime</p>
+                    <br>
+                    <p>Uitgave Jaar: @item.PublicationYear</p>
+                    <br>
                 </div>
-            }
+                
+                <a class="btn btn-primary" href=@Url.Action("Details", "BoardGames", new { id = item.BoardgameID })>Details</a>
+
+            </div>
         </div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+    }
+
 </div>
+
+<script>
+
+    document.querySelectorAll("footer");
+
+</script>
+
 

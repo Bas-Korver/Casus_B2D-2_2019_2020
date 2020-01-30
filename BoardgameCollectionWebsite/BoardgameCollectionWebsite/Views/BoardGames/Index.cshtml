@@ -23,7 +23,7 @@
     }
 
         #comparisonContainer.open {
-            height: 250px;
+            height: 300px;
         }
 
         #comparisonContainer #comparisonTitle {
@@ -80,7 +80,7 @@
     }
 </style>
 
-<div id="comparisonContainer" class="open">
+<div id="comparisonContainer">
     <div id="comparisonTitle" onclick="OnComparisonToggle()"><span>Vergelijk</span><i id="comparisonArrow" class="material-icons">keyboard_arrow_up</i></div>
     <div id="comparisonList">
 
@@ -99,7 +99,7 @@
             {
                 if (@item.BoardgameCategories.Count != 0)
                 {
-                    <div class="input-group">
+                    <div class="input-group gameCat">
                         <input type="checkbox" name="@item.Title" id="@item.Title" />
                         <label for="@item.Title">@(item.BoardgameCategories.First().Category.CategoryName)</label>
                     </div>
@@ -163,7 +163,7 @@
             <input type="text" name="gameDescription" id="gameDescription" />
             <br /><br />
 
-            <input type="submit" value="Search" />
+            <input type="submit" class="btn btn-primary" value="Search" />
         }
 
     </div>
@@ -185,6 +185,8 @@
                     @Html.ActionLink("Details", "Details", new { id = item.BoardgameID })
                     <!-- When checkbox for comparison is clicked, the element is passed along with the game ID and title -->
                     <label><input type="checkbox" onchange="OnCompareChange(this, '@item.BoardgameID', '@item.Title')" /> Vergelijk</label>
+                    <label><input type="checkbox"/> Favoriet</label>
+                    <label><input type="checkbox"/> In bezit</label>
                 </div>
             </div>
             <hr />
@@ -194,6 +196,26 @@
 
 
 <script type="text/javascript">
+
+    // Remove duplicate categories from the filter menu
+    let gameCatElements = [];
+    const elements = document.querySelectorAll(".gameCat > label");
+    for (let el of elements) {
+
+        // Get category name
+        const gameCatName = el.innerHTML;
+
+        // Check if category already present in the list
+        // If not in array --> add
+        // If array --> remove parent element
+        if (gameCatElements.indexOf(gameCatName) == -1) {
+            gameCatElements.push(gameCatName);
+        } else {
+            el.parentElement.remove()
+        }
+    }
+    
+
     // Array of objects (id, title) selected for comparison
     const gamesToCompare = [];
 
@@ -235,11 +257,16 @@
             title
         }
 
+        if (gamesToCompare.length == 7) {
+            checkbox.checked = false;
+            return alert("Je kunt maximaal 7 spellen met elkaar vergelijken");
+        } 
+
         if (checkbox.checked) {
             // Add game to comparison list
             gamesToCompare.push(game);
 
-            const element = document.createElement("h3");
+            const element = document.createElement("h5");
             element.innerText = game.title;
             element.title = game.title;
 
