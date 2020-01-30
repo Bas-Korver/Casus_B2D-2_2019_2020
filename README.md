@@ -14,6 +14,7 @@
     1. Als je per ongeluk het project draait zonder het project te builden, dan kan krijg je een error en werkt builden of rebuilden niet meer. Je moet dan eerst de solution cleanen (deze actie vind je ook onder de tab "Build"), daarna kan je dan het project weer builden
  10. Je kan nu het project draaien.
  
+ 
 
 ## Casusleden
 |Voornaam  |Tussenvoegsel|Achternaam |Scrumgroep|
