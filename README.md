@@ -1,15 +1,23 @@
 # Casus B2D-2 2019/2020
 ## Installatie
- 1. Klik op de Clone or download knop.
- 1. Klik op download zip.
+
+### Initiele installatie
+ 1. Klik op de "Clone or download" knop.
+ 1. Klik op "download zip".
  1. Ga naar de plek waar je het zip-bestand hebt opgeslagen en pak het uit.
  1. Open de uitgepakt map en open daarna de map "BoardgameCollectionWebsite".
- 1. Open het bestand "BoardgameCollectionWebsite.sln" met Visual Studio.
+ 1. Open het project "BoardgameCollectionWebsite.sln" met Visual Studio.
  1. Wanneer Visual Studio geopent is, klik op de tab "Project" en klik dan in de lijst op "Manage NuGet Packages...".
  1. Er verschijnt nu een nieuw venster, bovenaan in de gelenbalk staat "Some NuGet packages are missing from this solution. Click to restore from your online package sources".
  1. Klik aan de rechterkant in de gelenbalk op de knop "Restore".
+ 1. Nu de NuGet packages zijn herstelt hoef je alleen nog het project te builden deze actie vind je onder de tab "Build".
+    1. Als je per ongeluk het project draait zonder het project te builden, dan kan krijg je een error en werkt builden of rebuilden niet meer. Je moet dan eerst de solution cleanen (deze actie vind je ook onder de tab "Build"), daarna kan je dan het project weer builden
  1. Je kan nu het project draaien.
-
+ 
+ ### Database verbinden
+ 1. Open het project "BoardgameCollectionWebsite.sln" met Visual Studio.
+ 1. Wanneer Visual Studio geopent is, klik op de tab "Tools" en klik dan in de lijst op "Connect to Database..."
+ 1. Er verschijnt nu een pop-up "Add Connection". Zorg ervoor dat de data source op "Microsoft SQL Server (SqlClient)" staat 
 
 ## Casusleden
 |Voornaam  |Tussenvoegsel|Achternaam |Scrumgroep|
