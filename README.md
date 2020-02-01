@@ -1,7 +1,7 @@
 # Casus B2D-2 2019/2020
 ## Installatie
 
-### Initiele installatie
+### Initiële installatie
  1. Klik op de "Clone or download" knop.
  2. Klik op "download zip".
  3. Ga naar de plek waar je het zip-bestand hebt opgeslagen en pak het uit.
